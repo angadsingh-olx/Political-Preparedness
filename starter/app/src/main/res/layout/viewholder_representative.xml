@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="representative"
+            type="com.example.android.politicalpreparedness.representative.model.Representative" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/representativePhoto"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            tools:src="@drawable/ic_profile"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/imageBarrier"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            app:barrierDirection="end"
+            app:constraint_referenced_ids="representativePhoto"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/representativeTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            tools:text="President of the United States"
+            app:layout_constraintStart_toStartOf="@id/imageBarrier"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/titleBarrier"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            app:constraint_referenced_ids="representativeTitle"
+            app:barrierDirection="bottom"/>
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/linksBarrier"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            app:barrierDirection="start"
+            app:constraint_referenced_ids="wwwIcon, twitterIcon, facebookIcon"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/wwwIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintVertical_bias="1"
+            app:layout_constraintTop_toBottomOf="@id/titleBarrier"
+            app:srcCompat="@drawable/ic_www"
+            app:layout_constraintEnd_toStartOf="@id/facebookIcon"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/facebookIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintVertical_bias="1"
+            app:layout_constraintTop_toBottomOf="@id/titleBarrier"
+            app:srcCompat="@drawable/ic_facebook"
+            app:layout_constraintEnd_toStartOf="@id/twitterIcon"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/twitterIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintVertical_bias="1"
+            app:layout_constraintTop_toBottomOf="@id/titleBarrier"
+            app:srcCompat="@drawable/ic_twitter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/representativeName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/imageBarrier"
+            app:layout_constraintTop_toBottomOf="@id/titleBarrier"
+            app:layout_constraintEnd_toStartOf="@id/linksBarrier"
+            app:layout_constraintBottom_toTopOf="@id/representativeParty"
+            tools:text="Donald J. Trump"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/representativeParty"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@id/imageBarrier"
+            app:layout_constraintTop_toBottomOf="@id/representativeName"
+            app:layout_constraintEnd_toStartOf="@id/linksBarrier"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="Republican Party"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

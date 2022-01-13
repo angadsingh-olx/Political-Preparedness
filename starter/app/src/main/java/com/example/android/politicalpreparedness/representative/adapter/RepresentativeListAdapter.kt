@@ -29,6 +29,13 @@ class RepresentativeListAdapter: ListAdapter<Representative, RepresentativeViewH
 
 class RepresentativeViewHolder(val binding: ViewholderRepresentativeBinding): RecyclerView.ViewHolder(binding.root) {
 
+    companion object {
+        fun from(parent: ViewGroup): RepresentativeViewHolder {
+            val viewBinding = ViewholderRepresentativeBinding.inflate(LayoutInflater.from(parent.context), parent)
+            return RepresentativeViewHolder(viewBinding)
+        }
+    }
+
     fun bind(item: Representative) {
         binding.representative = item
         binding.representativePhoto.setImageResource(R.drawable.ic_profile)
@@ -79,5 +86,15 @@ class RepresentativeViewHolder(val binding: ViewholderRepresentativeBinding): Re
 }
 
 //TODO: Create RepresentativeDiffCallback
+class RepresentativeDiffCallback: DiffUtil.ItemCallback<Representative>() {
+    override fun areItemsTheSame(oldItem: Representative, newItem: Representative): Boolean {
+        return oldItem == newItem
+    }
+
+    override fun areContentsTheSame(oldItem: Representative, newItem: Representative): Boolean {
+        return oldItem == newItem
+    }
+
+}
 
 //TODO: Create RepresentativeListener
