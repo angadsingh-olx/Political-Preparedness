@@ -36,15 +36,19 @@ class ElectionsViewModel(
     //TODO: Create val and functions to populate live data for upcoming elections from the API and saved elections from local database
     fun fetchElectionData() {
         viewModelScope.launch {
+            _state.value = State.LOADING
             kotlin.runCatching {
                 electionNetworkDataRepository.value.getListOfElections()
             }.onSuccess {
                 if (it is Result.Success) {
+                    _state.value = State.SUCCESS
                     _electionsLiveData.value = it.data
                 } else {
-
+                    it as Result.Error
+                    _state.value = State.ERROR(it.message)
                 }
             }.onFailure {
+                _state.value = State.ERROR("Unknown Error")
                 it.printStackTrace()
             }
         }

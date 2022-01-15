@@ -75,8 +75,6 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/viewholder_election"/>
 
-
-
         <ProgressBar
             android:id="@+id/status_loading_wheel"
             android:layout_width="wrap_content"

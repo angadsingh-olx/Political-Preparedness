@@ -42,18 +42,8 @@
         android:label="fragment_elections"
         tools:layout="@layout/fragment_election">
         <action
-            android:id="@+id/action_electionsFragment_to_electionInfoFragment"
-            app:destination="@id/electionInfoFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/electionInfoFragment"
-        android:name="com.example.android.politicalpreparedness.election.ElectionInfoFragment"
-        android:label="ElectionInfoFragment"
-        tools:layout="@layout/fragment_election_info">
-
-        <argument
-            android:name="arg_election"
-            app:argType="com.example.android.politicalpreparedness.network.models.Election"/>
+            android:id="@+id/action_electionsFragment_to_voterInfoFragment"
+            app:destination="@id/voterInfoFragment" />
     </fragment>
 
 </navigation>

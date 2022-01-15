@@ -1,10 +1,8 @@
 package com.example.android.politicalpreparedness.representative.adapter
 
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.Spinner
+import android.widget.*
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +11,7 @@ import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.arch.entity.State
 import com.example.android.politicalpreparedness.election.adapter.ElectionListAdapter
 import com.example.android.politicalpreparedness.network.models.Election
+import java.util.*
 
 @BindingAdapter("profileImage")
 fun fetchImage(view: ImageView, src: String?) {
@@ -50,6 +49,20 @@ fun bindLoaderState(progressBar: ProgressBar, state: State?) {
         State.LOADING -> progressBar.visibility = View.VISIBLE
         is State.ERROR -> progressBar.visibility = View.GONE
         State.SUCCESS -> progressBar.visibility = View.GONE
+    }
+}
+
+@BindingAdapter("dateText")
+fun loadFormattedDate(textView: TextView, date: Date?) {
+    textView.text = date?.toString()
+}
+
+@BindingAdapter("shouldShowView")
+fun shouldShowView(textView: TextView, any: Any?) {
+    textView.visibility = if (any != null) {
+        View.VISIBLE
+    } else {
+        View.GONE
     }
 }
 
