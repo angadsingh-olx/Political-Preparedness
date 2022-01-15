@@ -11,4 +11,34 @@
 
     <!-- TODO: Add necessary styles -->
 
+    <style name="TextAppearance.Heading.Dark" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textSize">@dimen/size_heading</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/default_text_color</item>
+    </style>
+
+    <style name="TextAppearance.Title.Dark" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textSize">@dimen/size_title</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/default_text_color</item>
+    </style>
+
+    <style name="TextAppearance.Subtitle.Dark" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textSize">@dimen/size_title</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/default_text_color</item>
+    </style>
+
+    <style name="TextAppearance.Normal.Dark" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textSize">@dimen/size_normal</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/default_text_color</item>
+    </style>
+
+    <style name="TextAppearance.Small.Dark" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textSize">@dimen/size_small_text</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/default_text_color</item>
+    </style>
+
 </resources>

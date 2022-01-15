@@ -5,4 +5,5 @@
     <!-- TODO: Add necessary string values -->
     <string name="label_upcoming_elections">Upcoming Elections</string>
     <string name="label_find_representatives">Find my Representatives</string>
+    <string name="label_saved_elections">Saved Elections</string>
 </resources>
