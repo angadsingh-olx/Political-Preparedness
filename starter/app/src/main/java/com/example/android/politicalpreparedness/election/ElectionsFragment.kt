@@ -38,16 +38,24 @@ class ElectionsFragment: Fragment() {
         //TODO: Link elections to voter info
 
         //DONE: Initiate recycler adapters
-        val adapter = ElectionListAdapter(object: ElectionListener {
+        val electionAdapter = ElectionListAdapter(object: ElectionListener {
             override fun onElectionItemSelected(election: Election) {
                 this@ElectionsFragment.findNavController()
                     .navigate(ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(election.id, election.division))
             }
         })
-        viewBinding.listElections.adapter = adapter
+        val savedElectionAdapter = ElectionListAdapter(object: ElectionListener {
+            override fun onElectionItemSelected(election: Election) {
+                this@ElectionsFragment.findNavController()
+                    .navigate(ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(election.id, election.division))
+            }
+        })
+        viewBinding.listElections.adapter = electionAdapter
+        viewBinding.listSavedElections.adapter = savedElectionAdapter
 
         //DONE: Populate recycler adapters
         viewModel.fetchElectionData()
+        viewModel.fetchSavedData()
         return viewBinding.root
     }
 

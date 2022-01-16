@@ -9,6 +9,8 @@ import com.example.android.politicalpreparedness.databinding.FragmentVoterInfoBi
 import com.example.android.politicalpreparedness.network.models.Election
 import android.content.Intent
 import android.net.Uri
+import androidx.lifecycle.Observer
+import com.example.android.politicalpreparedness.R
 
 
 class VoterInfoFragment : Fragment() {
@@ -23,25 +25,14 @@ class VoterInfoFragment : Fragment() {
 
     private lateinit var viewBinding: FragmentVoterInfoBinding
 
-    val actionListener = object: VotingDetailListener {
-        override fun loadInfoUrl(url: String) {
-            loadUrl(url)
-        }
-
-        override fun onFollowCtaAction(election: Election) {
-
-        }
-    }
-
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        //TODO: Add binding values
+        //DONE: Add binding values
         viewBinding = FragmentVoterInfoBinding.inflate(inflater, container, false)
         viewBinding.lifecycleOwner = this
         viewBinding.viewModel = viewModel
-        viewBinding.actionListener = actionListener
-        //TODO: Populate voter info -- hide views without provided data.
+        //DONE: Populate voter info -- hide views without provided data.
         /**
         Hint: You will need to ensure proper data is provided from previous fragment.
         */
@@ -49,17 +40,29 @@ class VoterInfoFragment : Fragment() {
             val division = VoterInfoFragmentArgs.fromBundle(it).argDivision
             val electionId = VoterInfoFragmentArgs.fromBundle(it).argElectionId
             viewModel.fetchElectionData(division, electionId.toLong())
+            viewModel.onPageLoad(electionId.toLong())
         }
 
-        //TODO: Handle loading of URLs
+        //DONE: Handle loading of URLs
+        viewModel.webUrl.observe(viewLifecycleOwner, Observer {
+            loadUrl(it)
+        })
 
-        //TODO: Handle save button UI state
-        //TODO: cont'd Handle save button clicks
+        //DONE: Handle save button UI state
+        viewModel.electionSaved.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                viewBinding.actionFollow.text = getString(R.string.label_unfollow_election)
+            } else {
+                viewBinding.actionFollow.text = getString(R.string.label_follow_election)
+            }
+        })
+
+        //DONE: cont'd Handle save button clicks
         return viewBinding.root
     }
 
-    //TODO: Create method to load URL intents
-    fun loadUrl(url: String) {
+    //DONE: Create method to load URL intents
+    private fun loadUrl(url: String) {
         startActivity(
             Intent(
                 Intent.ACTION_VIEW,
@@ -67,10 +70,4 @@ class VoterInfoFragment : Fragment() {
             )
         )
     }
-}
-
-interface VotingDetailListener {
-    fun loadInfoUrl(url: String)
-
-    fun onFollowCtaAction(election: Election)
 }

@@ -18,7 +18,7 @@ class VoterInfoViewModel(
     private val electionNetworkDataRepository: Lazy<ElectionNetworkDataRepository>
 ) : ViewModel() {
 
-    //TODO: Add live data to hold voter info
+    //DONE: Add live data to hold voter info
     private var _voterInfoLiveData = MutableLiveData<VoterInfoResponse>()
 
     val voterInfoLiveData: LiveData<VoterInfoResponse>
@@ -28,7 +28,15 @@ class VoterInfoViewModel(
         get() = _state
     private val _state = MutableLiveData<State>()
 
-    //TODO: Add var and methods to populate voter info
+    val electionSaved: LiveData<Boolean>
+        get() = _electionSavedLiveData
+    private val _electionSavedLiveData = MutableLiveData<Boolean>()
+
+    val webUrl: LiveData<String>
+        get() = _webUrlLiveData
+    private val _webUrlLiveData = MutableLiveData<String>()
+
+    //DONE: Add var and methods to populate voter info
     fun fetchElectionData(division: Division, id: Long) {
         viewModelScope.launch {
             _state.value = State.LOADING
@@ -52,10 +60,52 @@ class VoterInfoViewModel(
         }
     }
 
-    //TODO: Add var and methods to support loading URLs
+    //DONE: Add var and methods to support loading URLs
+    fun loadInfoUrl(url: String) {
+        _webUrlLiveData.value = url
+    }
 
-    //TODO: Add var and methods to save and remove elections to local database
-    //TODO: cont'd -- Populate initial state of save button to reflect proper action based on election saved status
+    //DONE: Add var and methods to save and remove elections to local database
+    fun onFollowCtaAction(election: Election) {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                electionLocalDataRepository.value.getElectionById(election.id.toLong())
+            }.onSuccess {
+                when(it) {
+                    is Result.Error -> {
+                        electionLocalDataRepository.value.saveElection(election)
+                        _electionSavedLiveData.value = true
+                    }
+                    is Result.Success -> {
+                        electionLocalDataRepository.value.deleteElection(election.id.toLong())
+                        _electionSavedLiveData.value = false
+                    }
+                }
+            }.onFailure {
+                _state.value = State.ERROR("Unknown Error")
+            }
+        }
+    }
+
+    //DONE: cont'd -- Populate initial state of save button to reflect proper action based on election saved status
+    fun onPageLoad(electionId: Long) {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                electionLocalDataRepository.value.getElectionById(electionId)
+            }.onSuccess {
+                when(it) {
+                    is Result.Error -> {
+                        _electionSavedLiveData.value = false
+                    }
+                    is Result.Success -> {
+                        _electionSavedLiveData.value = true
+                    }
+                }
+            }.onFailure {
+                _state.value = State.ERROR("Unknown Error")
+            }
+        }
+    }
 
     /**
      * Hint: The saved state can be accomplished in multiple ways. It is directly related to how elections are saved/removed from the database.

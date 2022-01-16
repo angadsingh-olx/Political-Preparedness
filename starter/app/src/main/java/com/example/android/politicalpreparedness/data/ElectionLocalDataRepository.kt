@@ -8,18 +8,21 @@ import com.example.android.politicalpreparedness.domain.LocalDataSource
 import com.example.android.politicalpreparedness.network.models.Election
 
 class ElectionLocalDataRepository(private val electionDao: Lazy<ElectionDao>): LocalDataSource {
-    private var _savedElectionsLiveData: MutableLiveData<Result<List<Election>>> = MutableLiveData()
+    override suspend fun getListOfElections(): Result<List<Election>> {
+        val items = electionDao.value.getListOfElections()
+        return if (items == null) {
+            Result.Success(emptyList())
+        } else {
+            Result.Success(items)
+        }
+    }
 
-    val savedElectionsLiveData: LiveData<Result<List<Election>>>
-        get() = _savedElectionsLiveData
-
-    override suspend fun getListOfElections() {
-        kotlin.runCatching {
-            electionDao.value.getListOfElections()
-        }.onSuccess {
-            _savedElectionsLiveData.value = Result.Success(it)
-        }.onFailure {
-            _savedElectionsLiveData.value = Result.Error("Failed to load saved data")
+    override suspend fun getElectionById(id: Long): Result<Election?> {
+        val item = electionDao.value.getElectionById(id)
+        return if (item != null) {
+            Result.Success(item)
+        } else {
+            Result.Error("Item doesn't exist")
         }
     }
 
