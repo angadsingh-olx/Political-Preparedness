@@ -41,4 +41,9 @@
         <item name="android:textColor">@color/default_text_color</item>
     </style>
 
+    <style name="TextAppearance.AppCompat.Button.Primary" parent="Base.TextAppearance.AppCompat.Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:backgroundTint">@color/colorPrimaryDark</item>
+    </style>
+
 </resources>

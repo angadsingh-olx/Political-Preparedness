@@ -54,7 +54,7 @@ class VoterInfoViewModel(
                     _state.value = State.ERROR(it.message)
                 }
             }.onFailure {
-                _state.value = State.ERROR("Unknown Error")
+                _state.value = State.ERROR("Failed to load data")
                 it.printStackTrace()
             }
         }
@@ -66,18 +66,23 @@ class VoterInfoViewModel(
     }
 
     //DONE: Add var and methods to save and remove elections to local database
-    fun onFollowCtaAction(election: Election) {
+    fun onFollowCtaAction(electionId: Long) {
         viewModelScope.launch {
             kotlin.runCatching {
-                electionLocalDataRepository.value.getElectionById(election.id.toLong())
+                electionLocalDataRepository.value.getElectionById(electionId)
             }.onSuccess {
                 when(it) {
                     is Result.Error -> {
-                        electionLocalDataRepository.value.saveElection(election)
-                        _electionSavedLiveData.value = true
+                        if (voterInfoLiveData.value != null) {
+                            electionLocalDataRepository.value.saveElection(voterInfoLiveData.value?.election!!)
+                            _electionSavedLiveData.value = true
+                        } else {
+                            _state.value = State.ERROR("Error Following the Election")
+                            _electionSavedLiveData.value = false
+                        }
                     }
                     is Result.Success -> {
-                        electionLocalDataRepository.value.deleteElection(election.id.toLong())
+                        electionLocalDataRepository.value.deleteElection(electionId)
                         _electionSavedLiveData.value = false
                     }
                 }

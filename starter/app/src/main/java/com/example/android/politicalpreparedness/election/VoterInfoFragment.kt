@@ -9,8 +9,12 @@ import com.example.android.politicalpreparedness.databinding.FragmentVoterInfoBi
 import com.example.android.politicalpreparedness.network.models.Election
 import android.content.Intent
 import android.net.Uri
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.example.android.politicalpreparedness.R
+import com.example.android.politicalpreparedness.arch.entity.State
+import com.google.android.material.snackbar.Snackbar
 
 
 class VoterInfoFragment : Fragment() {
@@ -41,6 +45,7 @@ class VoterInfoFragment : Fragment() {
             val electionId = VoterInfoFragmentArgs.fromBundle(it).argElectionId
             viewModel.fetchElectionData(division, electionId.toLong())
             viewModel.onPageLoad(electionId.toLong())
+            viewBinding.electionId = electionId.toLong()
         }
 
         //DONE: Handle loading of URLs
@@ -57,6 +62,17 @@ class VoterInfoFragment : Fragment() {
             }
         })
 
+        viewModel.state.observe(viewLifecycleOwner, Observer {
+            if (it is State.ERROR) {
+                it.message?.let { message ->
+                    Snackbar.make(viewBinding.root, message, Snackbar.LENGTH_SHORT).show()
+                }
+            }
+        })
+
+        viewModel.voterInfoLiveData.observe(viewLifecycleOwner, Observer {
+            (activity as AppCompatActivity).supportActionBar?.title= it.election.name
+        })
         //DONE: cont'd Handle save button clicks
         return viewBinding.root
     }
@@ -69,5 +85,10 @@ class VoterInfoFragment : Fragment() {
                 Uri.parse(url)
             )
         )
+    }
+
+    override fun onDestroyView() {
+        (activity as AppCompatActivity).supportActionBar?.title= getString(R.string.app_name)
+        super.onDestroyView()
     }
 }

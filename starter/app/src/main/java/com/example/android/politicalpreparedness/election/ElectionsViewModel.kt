@@ -48,7 +48,7 @@ class ElectionsViewModel(
                     _state.value = State.ERROR(it.message)
                 }
             }.onFailure {
-                _state.value = State.ERROR("Unknown Error")
+                _state.value = State.ERROR("Failed to load data")
                 it.printStackTrace()
             }
         }

@@ -6,6 +6,10 @@
     <!-- DONE: Add data binding node for Voter Info ViewModel -->
     <data>
         <variable
+            name="electionId"
+            type="Long" />
+
+        <variable
             name="viewModel"
             type="com.example.android.politicalpreparedness.election.VoterInfoViewModel" />
     </data>
@@ -15,16 +19,6 @@
         android:layout_height="match_parent"
         tools:context="com.example.android.politicalpreparedness.MainActivity">
 
-        <!-- TODO: Add title to toolbar -->
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/election_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/default_padding"
-            android:singleLine="true"
-            app:title="@{viewModel.voterInfoLiveData.election.name}"
-            app:layout_constraintTop_toTopOf="parent"/>
-
         <!-- DONE: Add visual styling -->
         <TextView
             android:id="@+id/election_date"
@@ -32,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/default_padding"
             app:dateText="@{viewModel.voterInfoLiveData.election.electionDay}"
-            app:layout_constraintTop_toBottomOf="@id/election_name"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="12 November 2055" />
 
         <!-- DONE: Add visual styling and content -->
@@ -83,9 +77,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_corresponding_address"
+            android:layout_marginTop="@dimen/medium_margin"
             app:shouldShowView="@{viewModel.voterInfoLiveData.state.get(0).electionAdministrationBody.correspondenceAddress}"
             app:layout_constraintTop_toBottomOf="@id/state_ballot"
-            app:layout_constraintStart_toStartOf="@id/election_date" />
+            app:layout_constraintStart_toStartOf="@id/election_date"
+            style="@style/TextAppearance.Title.Dark"/>
 
         <!-- DONE: Add data binding -->
         <TextView
@@ -103,10 +99,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/medium_margin"
-            android:onClick="@{() -> (viewModel.onFollowCtaAction(viewModel.voterInfoLiveData.election))}"
+            android:onClick="@{() -> (viewModel.onFollowCtaAction(electionId))}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            style="@style/TextAppearance.AppCompat.Button.Primary"
+            tools:text="@string/label_follow_election"/>
 
         <ProgressBar
             android:id="@+id/status_loading_wheel"

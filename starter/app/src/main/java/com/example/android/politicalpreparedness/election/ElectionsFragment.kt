@@ -10,10 +10,12 @@ import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.android.politicalpreparedness.arch.ServiceLocator
+import com.example.android.politicalpreparedness.arch.entity.State
 import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
 import com.example.android.politicalpreparedness.election.adapter.ElectionListAdapter
 import com.example.android.politicalpreparedness.election.adapter.ElectionListener
 import com.example.android.politicalpreparedness.network.models.Election
+import com.google.android.material.snackbar.Snackbar
 
 class ElectionsFragment: Fragment() {
 
@@ -30,10 +32,9 @@ class ElectionsFragment: Fragment() {
                               savedInstanceState: Bundle?): View {
         val viewBinding = FragmentElectionBinding.inflate(inflater, container, false)
         //DONE: Add ViewModel values and create ViewModel
+        //DONE: Add binding values
         viewBinding.lifecycleOwner = this
         viewBinding.electionViewModel = viewModel
-
-        //TODO: Add binding values
 
         //TODO: Link elections to voter info
 
@@ -56,6 +57,14 @@ class ElectionsFragment: Fragment() {
         //DONE: Populate recycler adapters
         viewModel.fetchElectionData()
         viewModel.fetchSavedData()
+
+        viewModel.state.observe(viewLifecycleOwner, Observer {
+            if (it is State.ERROR) {
+                it.message?.let { message ->
+                    Snackbar.make(viewBinding.root, message, Snackbar.LENGTH_SHORT).show()
+                }
+            }
+        })
         return viewBinding.root
     }
 
