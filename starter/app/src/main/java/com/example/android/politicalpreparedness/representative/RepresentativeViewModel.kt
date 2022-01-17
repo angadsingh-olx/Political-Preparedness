@@ -23,8 +23,6 @@ class RepresentativeViewModel(private val networkDataRepository: Lazy<ElectionNe
             get() = _showSnackBarInt
     private val _showSnackBarInt = MutableLiveData<Int>()
 
-    val address = MutableLiveData<Address>()
-
     val loaderState: LiveData<State>
         get() = _state
     private val _state = MutableLiveData<State>()
