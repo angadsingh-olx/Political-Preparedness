@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.android.politicalpreparedness.R
+import com.example.android.politicalpreparedness.arch.entity.State
 import com.example.android.politicalpreparedness.data.ElectionNetworkDataRepository
 import com.example.android.politicalpreparedness.network.models.Address
 import com.example.android.politicalpreparedness.representative.model.Representative
@@ -22,7 +23,10 @@ class RepresentativeViewModel(private val networkDataRepository: Lazy<ElectionNe
     private val _showSnackBarInt = MutableLiveData<Int>()
 
     val address = MutableLiveData<Address>()
-    val selectedPosition = MutableLiveData<Int>()
+
+    val loaderState: LiveData<State>
+        get() = _state
+    private val _state = MutableLiveData<State>()
 
     val line1 = MutableLiveData<String>()
     val line2 = MutableLiveData<String>()
@@ -33,10 +37,17 @@ class RepresentativeViewModel(private val networkDataRepository: Lazy<ElectionNe
     //DONE: Create function to fetch representatives from API from a provided address
     fun getRepresentatives() {
         viewModelScope.launch {
+            _state.value = State.LOADING
             if (validateEnteredData()) {
                 val address = getAddress()
-                val (offices, officials) = networkDataRepository.value.getRepresentativesFromNetworkAsync(address).await()
-                _representatives.value = offices.flatMap { office -> office.getRepresentatives(officials) }
+                kotlin.runCatching {
+                    val (offices, officials) = networkDataRepository.value.getRepresentativesFromNetworkAsync(address).await()
+                    _representatives.value = offices.flatMap { office -> office.getRepresentatives(officials) }
+                    _state.value = State.SUCCESS
+                }.onFailure {
+                    _showSnackBarInt.value = R.string.err_failed_rep_data
+                    _state.value = State.ERROR("")
+                }
             }
         }
     }
@@ -59,6 +70,8 @@ class RepresentativeViewModel(private val networkDataRepository: Lazy<ElectionNe
         city.value = address.city
         state.value = address.state
         zip.value = address.zip
+
+        getRepresentatives()
     }
 
     //DONE: Create function to get address from individual fields
