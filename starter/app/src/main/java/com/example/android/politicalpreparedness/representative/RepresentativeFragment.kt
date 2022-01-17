@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.arch.ServiceLocator
 import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
 import com.example.android.politicalpreparedness.election.ElectionsViewModel
@@ -110,13 +111,17 @@ class DetailFragment : Fragment() {
         val locationManager = requireActivity().getSystemService(AppCompatActivity.LOCATION_SERVICE) as LocationManager
         val criteria = Criteria()
         val provider = locationManager.getBestProvider(criteria, true)
-        provider?.let {
-            val location: Location? = locationManager.getLastKnownLocation(it)
+        if(provider != null) {
+            val location: Location? = locationManager.getLastKnownLocation(provider)
 
-            location?.let {
+            if (location != null) {
                 val address = geoCodeLocation(location)
                 viewModel.setLocation(address)
+            } else {
+                Snackbar.make(viewBinding.root, getString(R.string.err_fetch_location), Snackbar.LENGTH_LONG).show()
             }
+        } else {
+            Snackbar.make(viewBinding.root, getString(R.string.err_fetch_location), Snackbar.LENGTH_LONG).show()
         }
     }
 

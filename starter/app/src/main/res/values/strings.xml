@@ -24,4 +24,5 @@
     <string name="err_enter_city">Please enter city</string>
     <string name="err_enter_zip">Please enter zip</string>
     <string name="err_failed_rep_data">Failed to load representative data</string>
+    <string name="err_fetch_location">Failed to fetch device location</string>
 </resources>
