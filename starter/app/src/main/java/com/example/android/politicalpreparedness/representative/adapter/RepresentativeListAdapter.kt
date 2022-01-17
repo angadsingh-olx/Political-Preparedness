@@ -32,7 +32,7 @@ class RepresentativeViewHolder(val binding: ViewholderRepresentativeBinding): Re
     //TODO: Add companion object to inflate ViewHolder (from)
     companion object {
         fun from(parent: ViewGroup): RepresentativeViewHolder {
-            val viewBinding = ViewholderRepresentativeBinding.inflate(LayoutInflater.from(parent.context), parent)
+            val viewBinding = ViewholderRepresentativeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             return RepresentativeViewHolder(viewBinding)
         }
     }
@@ -90,16 +90,16 @@ class RepresentativeViewHolder(val binding: ViewholderRepresentativeBinding): Re
 
 }
 
-//TODO: Create RepresentativeDiffCallback
+//DONE: Create RepresentativeDiffCallback
 class RepresentativeDiffCallback: DiffUtil.ItemCallback<Representative>() {
     override fun areItemsTheSame(oldItem: Representative, newItem: Representative): Boolean {
         return oldItem == newItem
     }
 
     override fun areContentsTheSame(oldItem: Representative, newItem: Representative): Boolean {
-        return oldItem == newItem
+        return oldItem.office.name == newItem.office.name &&
+                oldItem.official.name == newItem.official.name
     }
-
 }
 
 //TODO: Create RepresentativeListener

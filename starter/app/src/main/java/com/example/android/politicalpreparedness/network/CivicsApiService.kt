@@ -8,6 +8,7 @@ import com.example.android.politicalpreparedness.network.models.VoterInfoRespons
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import kotlinx.coroutines.Deferred
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -45,7 +46,7 @@ interface CivicsApiService {
 
     //DONE: Add representatives API Call
     @GET("/civicinfo/v2/representatives")
-    suspend fun getRepresentativesFromNetwork(): Response<RepresentativeResponse>
+    fun getRepresentativesFromNetworkAsync(@Query("address") address: String): Deferred<RepresentativeResponse>
 }
 
 object CivicsApi {

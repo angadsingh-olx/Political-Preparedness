@@ -4,6 +4,11 @@
     xmlns:motion="http://schemas.android.com/tools">
 
     <!-- TODO: Add data binding node -->
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.android.politicalpreparedness.representative.RepresentativeViewModel" />
+    </data>
 
     <!-- TODO: Add motion scene to hide form on vertical scroll. -->
     <androidx.constraintlayout.motion.widget.MotionLayout
@@ -30,6 +35,7 @@
             android:autofillHints="postalAddress"
             android:hint="@string/label_address_line_1"
             android:inputType="textPostalAddress"
+            android:text="@={viewModel.line1}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/search_title" />
 
@@ -42,6 +48,7 @@
             android:autofillHints="postalAddress"
             android:hint="@string/label_address_line_2"
             android:inputType="textPostalAddress"
+            android:text="@={viewModel.line2}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/address_line_1" />
 
@@ -54,6 +61,7 @@
             android:autofillHints="postalAddress"
             android:inputType="textPostalAddress"
             android:hint="@string/label_city"
+            android:text="@={viewModel.city}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/state"
             app:layout_constraintTop_toBottomOf="@id/address_line_2" />
@@ -61,13 +69,15 @@
         <!-- TODO: Add default values from provided resources  -->
         <!-- TODO: Add data binding value -->
         <!-- TODO: Add visual styling and content -->
-        <Spinner
+        <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/state"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:autofillHints="postalAddress"
             android:entries="@array/states"
             android:inputType="textPostalAddress"
+            app:selectedValue="@={viewModel.state}"
+            app:stateValue="@{viewModel.state}"
             app:layout_constraintStart_toEndOf="@id/city"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/city"
@@ -83,6 +93,7 @@
             android:inputType="number"
             android:maxLength="5"
             android:hint="@string/label_zip"
+            android:text="@={viewModel.zip}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="@id/city"
             app:layout_constraintTop_toBottomOf="@id/city" />
@@ -90,11 +101,11 @@
         <!-- TODO: Add visual styling and label -->
         <Button
             android:id="@+id/button_search"
+            style="@style/TextAppearance.AppCompat.Button.Primary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/zip"
             android:text="@string/label_find_my_representatives"
-            style="@style/TextAppearance.AppCompat.Button.Primary"/>
+            app:layout_constraintTop_toBottomOf="@id/zip" />
 
         <!-- TODO: Add visual styling and content -->
         <Button
@@ -118,17 +129,18 @@
         <!-- TODO: Add Representatives RecyclerView -->
         <!-- TODO: Add visual styling and content -->
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/list_placeholder"
+            android:id="@+id/representativeList"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:gravity="center"
             android:textAlignment="center"
-            android:visibility="gone"
-            motion:visibilityMode="ignore"
-            motion:visibility="visible"
+            android:visibility="visible"
+            app:representativeListData="@{viewModel.representativeList}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/representative_title"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            motion:visibilityMode="ignore"
+            motion:listitem="@layout/viewholder_representative"/>
 
     </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>

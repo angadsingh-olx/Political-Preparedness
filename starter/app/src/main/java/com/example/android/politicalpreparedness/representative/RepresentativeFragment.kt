@@ -15,12 +15,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.example.android.politicalpreparedness.arch.ServiceLocator
 import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
 import com.example.android.politicalpreparedness.election.ElectionsViewModel
 import com.example.android.politicalpreparedness.election.ElectionsViewModelFactory
 import com.example.android.politicalpreparedness.network.models.Address
+import com.example.android.politicalpreparedness.representative.adapter.RepresentativeListAdapter
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.material.snackbar.Snackbar
 import java.util.Locale
 
 class DetailFragment : Fragment() {
@@ -41,16 +44,33 @@ class DetailFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
 
         //DONE: Establish bindings
         viewBinding = FragmentRepresentativeBinding.inflate(inflater, container, false)
+        viewBinding.viewModel = viewModel
+        viewBinding.lifecycleOwner = this
 
-        //TODO: Define and assign Representative adapter
+        //DONE: Define and assign Representative adapter
+        //DONE: Populate Representative adapter
+        viewBinding.representativeList.adapter = RepresentativeListAdapter()
 
-        //TODO: Populate Representative adapter
+        //DONE: Establish button listeners for field and location search
+        viewBinding.buttonSearch.setOnClickListener {
+            hideKeyboard()
+            viewModel.getRepresentatives()
+        }
 
-        //TODO: Establish button listeners for field and location search
+        viewBinding.buttonLocation.setOnClickListener {
+            hideKeyboard()
+            if (checkLocationPermissions()) {
+                getLocation()
+            }
+        }
+
+        viewModel.showSnackBarInt.observe(viewLifecycleOwner, Observer {
+            Snackbar.make(viewBinding.root, it, Snackbar.LENGTH_LONG).show()
+        })
         return viewBinding.root
     }
 
@@ -95,6 +115,7 @@ class DetailFragment : Fragment() {
 
             location?.let {
                 val address = geoCodeLocation(location)
+                viewModel.setLocation(address)
             }
         }
     }

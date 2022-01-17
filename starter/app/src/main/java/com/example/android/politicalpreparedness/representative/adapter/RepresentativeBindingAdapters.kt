@@ -10,13 +10,29 @@ import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.arch.entity.State
 import com.example.android.politicalpreparedness.election.adapter.ElectionListAdapter
 import com.example.android.politicalpreparedness.network.models.Election
+import com.example.android.politicalpreparedness.representative.model.Representative
 import java.util.*
+import androidx.appcompat.widget.AppCompatSpinner
+
+import androidx.databinding.InverseBindingAdapter
+import android.widget.ArrayAdapter
+
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
+
+import androidx.databinding.InverseBindingListener
+
+
+
+
+
+
 
 @BindingAdapter("profileImage")
 fun fetchImage(view: ImageView, src: String?) {
     src?.let {
         val uri = src.toUri().buildUpon().scheme("https").build()
-        //TODO: Add Glide call to load image and circle crop - user ic_profile as a placeholder and for errors.
+        //DONE: Add Glide call to load image and circle crop - user ic_profile as a placeholder and for errors.
         Glide.with(view).load(uri)
             .placeholder(R.drawable.ic_profile)
             .error(R.drawable.ic_profile)
@@ -36,9 +52,39 @@ fun Spinner.setNewValue(value: String?) {
     }
 }
 
+@BindingAdapter(value = ["selectedValue", "selectedValueAttrChanged"], requireAll = false)
+fun bindSpinnerData(
+    pAppCompatSpinner: AppCompatSpinner,
+    newSelectedValue: String?,
+    newTextAttrChanged: InverseBindingListener
+) {
+    pAppCompatSpinner.onItemSelectedListener = object : OnItemSelectedListener {
+        override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
+            newTextAttrChanged.onChange()
+        }
+
+        override fun onNothingSelected(parent: AdapterView<*>?) {}
+    }
+    if (newSelectedValue != null) {
+        val pos = (pAppCompatSpinner.adapter as ArrayAdapter<String?>).getPosition(newSelectedValue)
+        pAppCompatSpinner.setSelection(pos, true)
+    }
+}
+
+@InverseBindingAdapter(attribute = "selectedValue", event = "selectedValueAttrChanged")
+fun captureSelectedValue(spinner: AppCompatSpinner): String? {
+    return spinner.selectedItem as String
+}
+
 @BindingAdapter("electionListData")
-fun bindRecyclerView(recyclerView: RecyclerView, data: List<Election>?) {
+fun bindElectionAdapter(recyclerView: RecyclerView, data: List<Election>?) {
     val adapter = recyclerView.adapter as ElectionListAdapter
+    adapter.submitList(data)
+}
+
+@BindingAdapter("representativeListData")
+fun bindRepresentativeAdapter(recyclerView: RecyclerView, data: List<Representative>?) {
+    val adapter = recyclerView.adapter as RepresentativeListAdapter
     adapter.submitList(data)
 }
 

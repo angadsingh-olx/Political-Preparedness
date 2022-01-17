@@ -4,7 +4,10 @@ import com.example.android.politicalpreparedness.domain.NetworkDataSource
 import com.example.android.politicalpreparedness.network.CivicsApiService
 import com.example.android.politicalpreparedness.network.models.Election
 import com.example.android.politicalpreparedness.arch.entity.Result
+import com.example.android.politicalpreparedness.network.models.Address
+import com.example.android.politicalpreparedness.network.models.RepresentativeResponse
 import com.example.android.politicalpreparedness.network.models.VoterInfoResponse
+import kotlinx.coroutines.Deferred
 
 class ElectionNetworkDataRepository(private val apiService: CivicsApiService): NetworkDataSource {
 
@@ -32,5 +35,9 @@ class ElectionNetworkDataRepository(private val apiService: CivicsApiService): N
         } else {
             Result.Error("Failed to load data", response.code())
         }
+    }
+
+    override fun getRepresentativesFromNetworkAsync(address: Address): Deferred<RepresentativeResponse> {
+        return apiService.getRepresentativesFromNetworkAsync(address.toFormattedString())
     }
 }

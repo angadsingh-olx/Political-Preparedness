@@ -20,4 +20,7 @@
     <string name="label_find_my_representatives">Find My Representatives</string>
     <string name="label_use_my_location">Use my location</string>
     <string name="label_my_representatives">My Representatives</string>
+    <string name="err_enter_address_1">Please enter address 1</string>
+    <string name="err_enter_city">Please enter city</string>
+    <string name="err_enter_zip">Please enter zip</string>
 </resources>
