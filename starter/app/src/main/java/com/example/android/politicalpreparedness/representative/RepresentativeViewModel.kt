@@ -9,6 +9,7 @@ import com.example.android.politicalpreparedness.arch.entity.State
 import com.example.android.politicalpreparedness.data.ElectionNetworkDataRepository
 import com.example.android.politicalpreparedness.network.models.Address
 import com.example.android.politicalpreparedness.representative.model.Representative
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class RepresentativeViewModel(private val networkDataRepository: Lazy<ElectionNetworkDataRepository>) : ViewModel() {
@@ -34,9 +35,12 @@ class RepresentativeViewModel(private val networkDataRepository: Lazy<ElectionNe
     val state = MutableLiveData<String>()
     val zip = MutableLiveData<String>()
 
+    private var runningJob: Job ?= null
+
     //DONE: Create function to fetch representatives from API from a provided address
     fun getRepresentatives() {
-        viewModelScope.launch {
+        runningJob?.cancel()
+        runningJob = viewModelScope.launch {
             _state.value = State.LOADING
             if (validateEnteredData()) {
                 val address = getAddress()

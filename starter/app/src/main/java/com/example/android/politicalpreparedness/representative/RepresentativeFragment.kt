@@ -81,6 +81,8 @@ class DetailFragment : Fragment() {
         if (requestCode == REQUEST_LOCATION_PERMISSION) {
             if (grantResults.isNotEmpty() && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                 getLocation()
+            } else {
+                Snackbar.make(viewBinding.root, getString(R.string.err_gps_permission), Snackbar.LENGTH_LONG).show()
             }
         }
     }
@@ -111,7 +113,7 @@ class DetailFragment : Fragment() {
         val locationManager = requireActivity().getSystemService(AppCompatActivity.LOCATION_SERVICE) as LocationManager
         val criteria = Criteria()
         val provider = locationManager.getBestProvider(criteria, true)
-        if(provider != null) {
+        if (provider != null) {
             val location: Location? = locationManager.getLastKnownLocation(provider)
 
             if (location != null) {
@@ -121,7 +123,7 @@ class DetailFragment : Fragment() {
                 Snackbar.make(viewBinding.root, getString(R.string.err_fetch_location), Snackbar.LENGTH_LONG).show()
             }
         } else {
-            Snackbar.make(viewBinding.root, getString(R.string.err_fetch_location), Snackbar.LENGTH_LONG).show()
+            Snackbar.make(viewBinding.root, getString(R.string.err_devices), Snackbar.LENGTH_LONG).show()
         }
     }
 

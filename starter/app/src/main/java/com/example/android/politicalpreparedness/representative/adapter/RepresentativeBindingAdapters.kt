@@ -47,6 +47,8 @@ fun Spinner.setNewValue(value: String?) {
     }
 }
 
+// Reference
+// https://stackoverflow.com/a/39444728/3051660
 @BindingAdapter(value = ["selectedValue", "selectedValueAttrChanged"], requireAll = false)
 fun bindSpinnerData(
     pAppCompatSpinner: AppCompatSpinner,

@@ -25,4 +25,6 @@
     <string name="err_enter_zip">Please enter zip</string>
     <string name="err_failed_rep_data">Failed to load representative data</string>
     <string name="err_fetch_location">Failed to fetch device location</string>
+    <string name="err_gps_permission">The permission is required to use this feature</string>
+    <string name="err_devices">Please checker whether the device GPS is on or not</string>
 </resources>
