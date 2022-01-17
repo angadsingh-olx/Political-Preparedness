@@ -16,7 +16,7 @@ import retrofit2.http.Query
 
 private const val BASE_URL = "https://www.googleapis.com/civicinfo/v2/"
 
-// TODO: Add adapters for Java Date and custom adapter ElectionAdapter (included in project)
+// DONE: Add adapters for Java Date and custom adapter ElectionAdapter (included in project)
 private val moshi = Moshi.Builder()
         .add(ElectionAdapter())
         .add(DateAdapter())
@@ -35,16 +35,16 @@ private val retrofit = Retrofit.Builder()
  */
 
 interface CivicsApiService {
-    //TODO: Add elections API Call
+    //DONE: Add elections API Call
     @GET("/civicinfo/v2/elections")
     suspend fun getElectionsFromNetwork(): Response<ElectionResponse>
 
-    //TODO: Add voterinfo API Call
+    //DONE: Add voterinfo API Call
     @GET("/civicinfo/v2/voterinfo")
     suspend fun getVoterInfoFromNetwork(@Query("address") address: String, @Query("electionId") electionId: Long?): Response<VoterInfoResponse>
 
-    //TODO: Add representatives API Call
-    @GET("/representatives")
+    //DONE: Add representatives API Call
+    @GET("/civicinfo/v2/representatives")
     suspend fun getRepresentativesFromNetwork(): Response<RepresentativeResponse>
 }
 

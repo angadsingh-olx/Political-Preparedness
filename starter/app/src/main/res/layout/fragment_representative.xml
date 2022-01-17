@@ -8,15 +8,18 @@
     <!-- TODO: Add motion scene to hide form on vertical scroll. -->
     <androidx.constraintlayout.motion.widget.MotionLayout
         android:layout_height="match_parent"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        app:layoutDescription="@xml/motion_description">
 
         <!-- TODO: Add visual styling and content -->
         <TextView
             android:id="@+id/search_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/label_representative_search"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/TextAppearance.Heading.Dark" />
 
         <!-- TODO: Add data binding value -->
         <!-- TODO: Add visual styling and content -->
@@ -24,7 +27,8 @@
             android:id="@+id/address_line_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autofillHints=""
+            android:autofillHints="postalAddress"
+            android:hint="@string/label_address_line_1"
             android:inputType="textPostalAddress"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/search_title" />
@@ -35,7 +39,8 @@
             android:id="@+id/address_line_2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:autofillHints=""
+            android:autofillHints="postalAddress"
+            android:hint="@string/label_address_line_2"
             android:inputType="textPostalAddress"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/address_line_1" />
@@ -46,8 +51,9 @@
             android:id="@+id/city"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:autofillHints=""
+            android:autofillHints="postalAddress"
             android:inputType="textPostalAddress"
+            android:hint="@string/label_city"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/state"
             app:layout_constraintTop_toBottomOf="@id/address_line_2" />
@@ -59,7 +65,8 @@
             android:id="@+id/state"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:autofillHints=""
+            android:autofillHints="postalAddress"
+            android:entries="@array/states"
             android:inputType="textPostalAddress"
             app:layout_constraintStart_toEndOf="@id/city"
             app:layout_constraintEnd_toEndOf="parent"
@@ -72,9 +79,10 @@
             android:id="@+id/zip"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:autofillHints=""
+            android:autofillHints="postalCode"
             android:inputType="number"
             android:maxLength="5"
+            android:hint="@string/label_zip"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="@id/city"
             app:layout_constraintTop_toBottomOf="@id/city" />
@@ -84,27 +92,32 @@
             android:id="@+id/button_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/zip" />
+            app:layout_constraintTop_toBottomOf="@id/zip"
+            android:text="@string/label_find_my_representatives"
+            style="@style/TextAppearance.AppCompat.Button.Primary"/>
 
         <!-- TODO: Add visual styling and content -->
         <Button
             android:id="@+id/button_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/button_search" />
+            android:text="@string/label_use_my_location"
+            app:layout_constraintTop_toBottomOf="@id/button_search"
+            style="@style/TextAppearance.AppCompat.Button.Primary"/>
 
         <!-- TODO: Add visual styling and content -->
         <TextView
             android:id="@+id/representative_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/label_my_representatives"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_location" />
+            app:layout_constraintTop_toBottomOf="@id/button_location"
+            style="@style/TextAppearance.Heading.Dark" />
 
         <!-- TODO: Add Representatives RecyclerView -->
-
         <!-- TODO: Add visual styling and content -->
-        <TextView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list_placeholder"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -112,6 +125,8 @@
             android:textAlignment="center"
             android:visibility="gone"
             motion:visibilityMode="ignore"
+            motion:visibility="visible"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@id/representative_title"
             app:layout_constraintBottom_toBottomOf="parent" />
 

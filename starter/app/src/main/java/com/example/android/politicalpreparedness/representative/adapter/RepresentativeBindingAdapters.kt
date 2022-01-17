@@ -2,7 +2,6 @@ package com.example.android.politicalpreparedness.representative.adapter
 
 import android.view.View
 import android.widget.*
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
