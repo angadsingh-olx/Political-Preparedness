@@ -37,57 +37,60 @@
             android:inputType="textPostalAddress"
             android:text="@={viewModel.line1}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/search_title" />
+            app:layout_constraintTop_toBottomOf="@id/search_title"
+            style="@style/TextAppearance.Subtitle.Dark"/>
 
         <!-- DONE: Add data binding value -->
         <!-- DONE: Add visual styling and content -->
         <EditText
             android:id="@+id/address_line_2"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/no_size"
             android:autofillHints="postalAddress"
             android:hint="@string/label_address_line_2"
             android:inputType="textPostalAddress"
             android:text="@={viewModel.line2}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/address_line_1" />
+            app:layout_constraintTop_toBottomOf="@id/address_line_1"
+            style="@style/TextAppearance.Subtitle.Dark"/>
 
         <!-- DONE: Add data binding value -->
         <!-- DONE: Add visual styling and content -->
         <EditText
             android:id="@+id/city"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/no_size"
             android:layout_height="wrap_content"
             android:autofillHints="postalAddress"
-            android:inputType="textPostalAddress"
             android:hint="@string/label_city"
+            android:inputType="textPostalAddress"
             android:text="@={viewModel.city}"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/state"
-            app:layout_constraintTop_toBottomOf="@id/address_line_2" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/address_line_2"
+            style="@style/TextAppearance.Subtitle.Dark"/>
 
         <!-- DONE: Add default values from provided resources  -->
         <!-- DONE: Add data binding value -->
         <!-- DONE: Add visual styling and content -->
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/state"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/no_size"
+            android:layout_height="@dimen/no_size"
             android:autofillHints="postalAddress"
             android:entries="@array/states"
             android:inputType="textPostalAddress"
-            app:selectedValue="@={viewModel.state}"
-            app:stateValue="@{viewModel.state}"
-            app:layout_constraintStart_toEndOf="@id/city"
+            app:layout_constraintBottom_toBottomOf="@id/city"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/city"
             app:layout_constraintTop_toTopOf="@id/city"
-            app:layout_constraintBottom_toBottomOf="@id/city"/>
+            app:selectedValue="@={viewModel.state}"
+            app:stateValue="@{viewModel.state}" />
 
         <!-- DONE: Add data binding value -->
         <!-- DONE: Add visual styling and content -->
         <EditText
             android:id="@+id/zip"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/no_size"
             android:layout_height="wrap_content"
             android:autofillHints="postalCode"
             android:inputType="number"
@@ -96,7 +99,8 @@
             android:text="@={viewModel.zip}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="@id/city"
-            app:layout_constraintTop_toBottomOf="@id/city" />
+            app:layout_constraintTop_toBottomOf="@id/city"
+            style="@style/TextAppearance.Subtitle.Dark"/>
 
         <!-- DONE: Add visual styling and label -->
         <Button
@@ -131,7 +135,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/representativeList"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/no_size"
             android:gravity="center"
             android:textAlignment="center"
             android:visibility="visible"

@@ -11,4 +11,8 @@
     <dimen name="size_title">16sp</dimen>
     <dimen name="size_normal">14sp</dimen>
     <dimen name="size_small_text">12sp</dimen>
+    <dimen name="no_size">0dp</dimen>
+    <dimen name="size_small_image">36dp</dimen>
+    <dimen name="size_profile_image">72dp</dimen>
+    <dimen name="size_one">1dp</dimen>
 </resources>

@@ -35,7 +35,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listElections"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/no_size"
             android:layout_marginStart="@dimen/small_margin"
             android:layout_marginEnd="@dimen/small_margin"
             app:electionListData="@{electionViewModel.electionsLiveData}"
@@ -65,7 +65,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listSavedElections"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/no_size"
             android:layout_marginStart="@dimen/small_margin"
             android:layout_marginEnd="@dimen/small_margin"
             app:electionListData="@{electionViewModel.savedElectionsLiveData}"
