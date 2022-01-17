@@ -29,7 +29,7 @@ class RepresentativeListAdapter: ListAdapter<Representative, RepresentativeViewH
 
 class RepresentativeViewHolder(val binding: ViewholderRepresentativeBinding): RecyclerView.ViewHolder(binding.root) {
 
-    //TODO: Add companion object to inflate ViewHolder (from)
+    //DONE: Add companion object to inflate ViewHolder (from)
     companion object {
         fun from(parent: ViewGroup): RepresentativeViewHolder {
             val viewBinding = ViewholderRepresentativeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -41,12 +41,12 @@ class RepresentativeViewHolder(val binding: ViewholderRepresentativeBinding): Re
         binding.representative = item
         binding.representativePhoto.setImageResource(R.drawable.ic_profile)
 
-        //TODO: Show social links ** Hint: Use provided helper methods
+        //DONE: Show social links ** Hint: Use provided helper methods
         item.official.channels?.let {
             showSocialLinks(it)
         }
 
-        //TODO: Show www link ** Hint: Use provided helper methods
+        //DONE: Show www link ** Hint: Use provided helper methods
         item.official.urls?.let {
             showWWWLinks(it)
         }
@@ -102,7 +102,7 @@ class RepresentativeDiffCallback: DiffUtil.ItemCallback<Representative>() {
     }
 }
 
-//TODO: Create RepresentativeListener
+//NOT NEEDED: Create RepresentativeListener
 interface RepresentativeListener {
 
 }

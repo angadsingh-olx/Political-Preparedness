@@ -29,7 +29,7 @@ import java.util.Locale
 class DetailFragment : Fragment() {
 
     companion object {
-        //TODO: Add Constant for Location request
+        //DONE: Add Constant for Location request
         private val REQUEST_LOCATION_PERMISSION = 1
     }
 

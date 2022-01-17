@@ -23,11 +23,6 @@ import android.widget.AdapterView.OnItemSelectedListener
 import androidx.databinding.InverseBindingListener
 
 
-
-
-
-
-
 @BindingAdapter("profileImage")
 fun fetchImage(view: ImageView, src: String?) {
     src?.let {
@@ -66,13 +61,13 @@ fun bindSpinnerData(
         override fun onNothingSelected(parent: AdapterView<*>?) {}
     }
     if (newSelectedValue != null) {
-        val pos = (pAppCompatSpinner.adapter as ArrayAdapter<String?>).getPosition(newSelectedValue)
+        val pos = (pAppCompatSpinner.adapter as ArrayAdapter<String>).getPosition(newSelectedValue)
         pAppCompatSpinner.setSelection(pos, true)
     }
 }
 
 @InverseBindingAdapter(attribute = "selectedValue", event = "selectedValueAttrChanged")
-fun captureSelectedValue(spinner: AppCompatSpinner): String? {
+fun captureSelectedValue(spinner: AppCompatSpinner): String {
     return spinner.selectedItem as String
 }
 

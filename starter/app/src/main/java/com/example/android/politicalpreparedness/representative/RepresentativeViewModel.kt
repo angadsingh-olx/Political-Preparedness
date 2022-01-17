@@ -52,7 +52,7 @@ class RepresentativeViewModel(private val networkDataRepository: Lazy<ElectionNe
 
      */
 
-    //TODO: Create function get address from geo location
+    //DONE: Create function get address from geo location
     fun setLocation(address: Address) {
         line1.value = address.line1
         line2.value = address.line2
@@ -61,7 +61,7 @@ class RepresentativeViewModel(private val networkDataRepository: Lazy<ElectionNe
         zip.value = address.zip
     }
 
-    //TODO: Create function to get address from individual fields
+    //DONE: Create function to get address from individual fields
     private fun validateEnteredData(): Boolean {
         if (line1.value.isNullOrBlank()) {
             _showSnackBarInt.value = R.string.err_enter_address_1

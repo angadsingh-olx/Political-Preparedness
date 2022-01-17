@@ -3,20 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:motion="http://schemas.android.com/tools">
 
-    <!-- TODO: Add data binding node -->
+    <!-- DONE: Add data binding node -->
     <data>
         <variable
             name="viewModel"
             type="com.example.android.politicalpreparedness.representative.RepresentativeViewModel" />
     </data>
 
-    <!-- TODO: Add motion scene to hide form on vertical scroll. -->
+    <!-- DONE: Add motion scene to hide form on vertical scroll. -->
     <androidx.constraintlayout.motion.widget.MotionLayout
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         app:layoutDescription="@xml/motion_description">
 
-        <!-- TODO: Add visual styling and content -->
+        <!-- DONE: Add visual styling and content -->
         <TextView
             android:id="@+id/search_title"
             android:layout_width="wrap_content"
@@ -26,8 +26,8 @@
             app:layout_constraintTop_toTopOf="parent"
             style="@style/TextAppearance.Heading.Dark" />
 
-        <!-- TODO: Add data binding value -->
-        <!-- TODO: Add visual styling and content -->
+        <!-- DONE: Add data binding value -->
+        <!-- DONE: Add visual styling and content -->
         <EditText
             android:id="@+id/address_line_1"
             android:layout_width="match_parent"
@@ -39,8 +39,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/search_title" />
 
-        <!-- TODO: Add data binding value -->
-        <!-- TODO: Add visual styling and content -->
+        <!-- DONE: Add data binding value -->
+        <!-- DONE: Add visual styling and content -->
         <EditText
             android:id="@+id/address_line_2"
             android:layout_width="match_parent"
@@ -52,8 +52,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/address_line_1" />
 
-        <!-- TODO: Add data binding value -->
-        <!-- TODO: Add visual styling and content -->
+        <!-- DONE: Add data binding value -->
+        <!-- DONE: Add visual styling and content -->
         <EditText
             android:id="@+id/city"
             android:layout_width="0dp"
@@ -66,9 +66,9 @@
             app:layout_constraintEnd_toStartOf="@id/state"
             app:layout_constraintTop_toBottomOf="@id/address_line_2" />
 
-        <!-- TODO: Add default values from provided resources  -->
-        <!-- TODO: Add data binding value -->
-        <!-- TODO: Add visual styling and content -->
+        <!-- DONE: Add default values from provided resources  -->
+        <!-- DONE: Add data binding value -->
+        <!-- DONE: Add visual styling and content -->
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/state"
             android:layout_width="0dp"
@@ -83,8 +83,8 @@
             app:layout_constraintTop_toTopOf="@id/city"
             app:layout_constraintBottom_toBottomOf="@id/city"/>
 
-        <!-- TODO: Add data binding value -->
-        <!-- TODO: Add visual styling and content -->
+        <!-- DONE: Add data binding value -->
+        <!-- DONE: Add visual styling and content -->
         <EditText
             android:id="@+id/zip"
             android:layout_width="0dp"
@@ -98,7 +98,7 @@
             app:layout_constraintEnd_toEndOf="@id/city"
             app:layout_constraintTop_toBottomOf="@id/city" />
 
-        <!-- TODO: Add visual styling and label -->
+        <!-- DONE: Add visual styling and label -->
         <Button
             android:id="@+id/button_search"
             style="@style/TextAppearance.AppCompat.Button.Primary"
@@ -107,7 +107,7 @@
             android:text="@string/label_find_my_representatives"
             app:layout_constraintTop_toBottomOf="@id/zip" />
 
-        <!-- TODO: Add visual styling and content -->
+        <!-- DONE: Add visual styling and content -->
         <Button
             android:id="@+id/button_location"
             android:layout_width="match_parent"
@@ -116,7 +116,7 @@
             app:layout_constraintTop_toBottomOf="@id/button_search"
             style="@style/TextAppearance.AppCompat.Button.Primary"/>
 
-        <!-- TODO: Add visual styling and content -->
+        <!-- DONE: Add visual styling and content -->
         <TextView
             android:id="@+id/representative_title"
             android:layout_width="wrap_content"
@@ -126,8 +126,8 @@
             app:layout_constraintTop_toBottomOf="@id/button_location"
             style="@style/TextAppearance.Heading.Dark" />
 
-        <!-- TODO: Add Representatives RecyclerView -->
-        <!-- TODO: Add visual styling and content -->
+        <!-- DONE: Add Representatives RecyclerView -->
+        <!-- DONE: Add visual styling and content -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/representativeList"
             android:layout_width="match_parent"

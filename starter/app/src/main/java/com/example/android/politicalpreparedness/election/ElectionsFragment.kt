@@ -36,8 +36,8 @@ class ElectionsFragment: Fragment() {
         viewBinding.lifecycleOwner = this
         viewBinding.electionViewModel = viewModel
 
-        //TODO: Link elections to voter info
 
+        //DONE: Link elections to voter info
         //DONE: Initiate recycler adapters
         val electionAdapter = ElectionListAdapter(object: ElectionListener {
             override fun onElectionItemSelected(election: Election) {
@@ -68,6 +68,6 @@ class ElectionsFragment: Fragment() {
         return viewBinding.root
     }
 
-    //TODO: Refresh adapters when fragment loads
+    //DONE: Refresh adapters when fragment loads
 
 }
