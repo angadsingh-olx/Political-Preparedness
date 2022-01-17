@@ -21,6 +21,7 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 
 import androidx.databinding.InverseBindingListener
+import androidx.databinding.InverseMethod
 
 
 @BindingAdapter("profileImage")
@@ -45,32 +46,6 @@ fun Spinner.setNewValue(value: String?) {
     if (position >= 0) {
         setSelection(position)
     }
-}
-
-// Reference
-// https://stackoverflow.com/a/39444728/3051660
-@BindingAdapter(value = ["selectedValue", "selectedValueAttrChanged"], requireAll = false)
-fun bindSpinnerData(
-    pAppCompatSpinner: AppCompatSpinner,
-    newSelectedValue: String?,
-    newTextAttrChanged: InverseBindingListener
-) {
-    pAppCompatSpinner.onItemSelectedListener = object : OnItemSelectedListener {
-        override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
-            newTextAttrChanged.onChange()
-        }
-
-        override fun onNothingSelected(parent: AdapterView<*>?) {}
-    }
-    if (newSelectedValue != null) {
-        val pos = (pAppCompatSpinner.adapter as ArrayAdapter<String>).getPosition(newSelectedValue)
-        pAppCompatSpinner.setSelection(pos, true)
-    }
-}
-
-@InverseBindingAdapter(attribute = "selectedValue", event = "selectedValueAttrChanged")
-fun captureSelectedValue(spinner: AppCompatSpinner): String {
-    return spinner.selectedItem as String
 }
 
 @BindingAdapter("electionListData")

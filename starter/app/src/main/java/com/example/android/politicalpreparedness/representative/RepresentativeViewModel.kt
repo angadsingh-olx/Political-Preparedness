@@ -1,9 +1,7 @@
 package com.example.android.politicalpreparedness.representative
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.app.Application
+import androidx.lifecycle.*
 import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.arch.entity.State
 import com.example.android.politicalpreparedness.data.ElectionNetworkDataRepository
@@ -12,7 +10,7 @@ import com.example.android.politicalpreparedness.representative.model.Representa
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class RepresentativeViewModel(private val networkDataRepository: Lazy<ElectionNetworkDataRepository>) : ViewModel() {
+class RepresentativeViewModel(private val networkDataRepository: Lazy<ElectionNetworkDataRepository>, val app: Application) : ViewModel() {
 
     //DONE: Establish live data for representatives and address
     val representativeList: LiveData<List<Representative>>
@@ -23,6 +21,8 @@ class RepresentativeViewModel(private val networkDataRepository: Lazy<ElectionNe
             get() = _showSnackBarInt
     private val _showSnackBarInt = MutableLiveData<Int>()
 
+    val selectedItem = MutableLiveData<Int>()
+
     val loaderState: LiveData<State>
         get() = _state
     private val _state = MutableLiveData<State>()
@@ -30,10 +30,16 @@ class RepresentativeViewModel(private val networkDataRepository: Lazy<ElectionNe
     val line1 = MutableLiveData<String>()
     val line2 = MutableLiveData<String>()
     val city = MutableLiveData<String>()
-    val state = MutableLiveData<String>()
+    val state = MediatorLiveData<String>()
     val zip = MutableLiveData<String>()
 
     private var runningJob: Job ?= null
+
+    init {
+        state.addSource(selectedItem) {
+            state.value = app.resources.getStringArray(R.array.states)[it]
+        }
+    }
 
     //DONE: Create function to fetch representatives from API from a provided address
     fun getRepresentatives() {

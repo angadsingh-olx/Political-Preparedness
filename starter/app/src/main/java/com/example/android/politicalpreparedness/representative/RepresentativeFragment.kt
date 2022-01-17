@@ -39,7 +39,7 @@ class DetailFragment : Fragment() {
     //DONE: Declare ViewModel
     private val viewModel by viewModels<RepresentativeViewModel> {
         RepresentativeViewModelFactory(
-            ServiceLocator.electionNetworkRepository
+            ServiceLocator.electionNetworkRepository, requireActivity().application
         )
     }
 
