@@ -9,6 +9,7 @@ import com.example.android.politicalpreparedness.arch.entity.State
 import com.example.android.politicalpreparedness.data.ElectionLocalDataRepository
 import com.example.android.politicalpreparedness.data.ElectionNetworkDataRepository
 import com.example.android.politicalpreparedness.network.models.Election
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 //DONE: Construct ViewModel and provide election datasource
@@ -35,39 +36,39 @@ class ElectionsViewModel(
 
     //DONE: Create val and functions to populate live data for upcoming elections from the API and saved elections from local database
     fun fetchElectionData() {
-        viewModelScope.launch {
-            _state.value = State.LOADING
+        viewModelScope.launch(Dispatchers.IO) {
+            _state.postValue(State.LOADING)
             kotlin.runCatching {
                 electionNetworkDataRepository.value.getListOfElections()
             }.onSuccess {
                 if (it is Result.Success) {
-                    _state.value = State.SUCCESS
-                    _electionsLiveData.value = it.data
+                    _state.postValue(State.SUCCESS)
+                    _electionsLiveData.postValue(it.data)
                 } else {
                     it as Result.Error
-                    _state.value = State.ERROR(it.message)
+                    _state.postValue(State.ERROR(it.message))
                 }
             }.onFailure {
-                _state.value = State.ERROR("Failed to load data")
+                _state.postValue(State.ERROR("Failed to load data"))
                 it.printStackTrace()
             }
         }
     }
 
     fun fetchSavedData() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             kotlin.runCatching {
                 electionLocalDataRepository.value.getListOfElections()
             }.onSuccess {
                 if (it is Result.Success) {
-                    _state.value = State.SUCCESS
-                    _savedElectionsLiveData.value = it.data
+                    _state.postValue(State.SUCCESS)
+                    _savedElectionsLiveData.postValue(it.data)
                 } else {
                     it as Result.Error
-                    _state.value = State.ERROR(it.message)
+                    _state.postValue(State.ERROR(it.message))
                 }
             }.onFailure {
-                _state.value = State.ERROR("Unknown Error")
+                _state.postValue(State.ERROR("Unknown Error"))
                 it.printStackTrace()
             }
         }
