@@ -52,6 +52,11 @@ class DetailFragment : Fragment() {
         viewBinding.viewModel = viewModel
         viewBinding.lifecycleOwner = this
 
+        if (savedInstanceState != null) {
+            val uiState = savedInstanceState.getBundle("motionState")
+            viewBinding.parentLayout.transitionState = uiState
+        }
+
         //DONE: Define and assign Representative adapter
         //DONE: Populate Representative adapter
         viewBinding.representativeList.adapter = RepresentativeListAdapter()
@@ -97,6 +102,12 @@ class DetailFragment : Fragment() {
             )
             false
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        val state = viewBinding.parentLayout.transitionState
+        outState.putBundle("motionState", state)
+        super.onSaveInstanceState(outState)
     }
 
     private fun isPermissionGranted() : Boolean {
